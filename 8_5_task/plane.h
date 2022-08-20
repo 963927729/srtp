@@ -96,8 +96,27 @@ struct Plane_Measure_Data
 
         return result;
     }
+    // 检验算法是否正确
+    double examine(Matrix A, Plane_Measure_Data B)
+    {
+        double result = 0;
+        for( int i=0; i<n; i++ )
+        {
+            double a[3] = {d[i][1], d[i][2], d[i][3]};
+            Matrix x(3,1); x.assign(a);
+            Matrix y(3,1); y.mul_matrix(A,x);
+            double sum = 0;
+            for( int j=0; j<3; j++ )
+            {
+                sum += (B.d[i][j] - y.data[j][1]) * (B.d[i][j] - y.data[j][1]);
+            }
+            sum = sqrt(sum);
+            cout << i << "~~~~~~~" << sum << endl;
+            result += sum;
+        }
+        return result;
+    }
 };
-
 
 
 #endif
