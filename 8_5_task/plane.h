@@ -102,13 +102,13 @@ struct Plane_Measure_Data
         double result = 0;
         for( int i=0; i<n; i++ )
         {
-            double a[3] = {d[i][1], d[i][2], d[i][3]};
+            double a[3] = {(*this).d[i][0], (*this).d[i][1], (*this).d[i][2]};
             Matrix x(3,1); x.assign(a);
-            Matrix y(3,1); y.mul_matrix(A,x);
+            Matrix y(3,1); y = y.mul_matrix(A,x);
             double sum = 0;
             for( int j=0; j<3; j++ )
             {
-                sum += (B.d[i][j] - y.data[j][1]) * (B.d[i][j] - y.data[j][1]);
+                sum += (B.d[i][j] - y.data[j][0]) * (B.d[i][j] - y.data[j][0]);
             }
             sum = sqrt(sum);
             cout << i << "~~~~~~~" << sum << endl;

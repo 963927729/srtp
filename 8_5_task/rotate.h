@@ -6,7 +6,7 @@
 #include <math.h>
 #include "matrix.h"
 
-
+#define pi 3.14159
 using namespace std;
 
 // 定义点 node
@@ -94,7 +94,7 @@ angle calc_angle ( node a, node b)
 	if( R.data[2][0] != 1 && R.data[2][0] != -1 )
 	{
 		x_1.alpha = -asin(R.data[2][0]);
-		x_2.alpha = M_PI - x_1.alpha;
+		x_2.alpha = pi - x_1.alpha;
 		x_1.beta = atan2( R.data[2][1]/cos(x_1.alpha), R.data[2][2]/cos(x_1.alpha));
 		x_2.beta = atan2( R.data[2][1]/cos(x_2.alpha), R.data[2][2]/cos(x_2.alpha));
 		x_1.gama = atan2( R.data[1][0]/cos(x_1.alpha), R.data[0][0]/cos(x_1.alpha));
@@ -106,11 +106,11 @@ angle calc_angle ( node a, node b)
 		x_1.gama = 0;
 		if( R.data[2][0] == -1 )
 		{
-			x_1.alpha = M_PI/2;
+			x_1.alpha = pi/2;
 			x_1.beta = x_1.gama + atan2( R.data[0][1], R.data[0][2]);
 		} else
 		{
-			x_1.alpha = -M_PI / 2;
+			x_1.alpha = -pi / 2;
 			x_1.beta = -x_1.gama + atan2( -R.data[0][1], -R.data[0][2]);
 		}
 		return x_1;
@@ -118,7 +118,28 @@ angle calc_angle ( node a, node b)
 
 }
 
-
+// 旋转矩阵
+Matrix rotate_matrix( angle sita )
+{
+    Matrix E(3,3), F(3,3), G(3,3),R(3,3);
+    double e[9] = {1,0,0,
+                   0,cos(sita.alpha),-sin(sita.alpha),
+                   0,sin(sita.alpha),cos(sita.alpha)};
+    E.assign(e);
+    double f[9] = {cos(sita.beta),0,sin(sita.beta),
+                   0,1,0,
+                   -sin(sita.beta),0,cos(sita.beta)};
+    F.assign(f);
+    double g[9] = {
+                   cos(sita.gama),-sin(sita.gama),0,
+                   sin(sita.gama),cos(sita.gama),0,
+                   0,0,1};
+    G.assign(g);
+    // 得到旋转矩阵
+    R = R.mul_matrix(E,F); R = R.mul_matrix(R,G);
+    R.Matrix_print();
+    return R;
+}
 
 #endif
 

@@ -56,7 +56,7 @@ struct Matrix
 	{  
 		for (int i = 0; i < row; i++)
 			for (int j = 0; j < col; j++)
-				(*this).data[i][j] = x[i*row+j];
+				(*this).data[i][j] = x[i*col+j];
 		return *this;
 	}
     // 将二维数组的值复制到矩阵中
