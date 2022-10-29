@@ -6,7 +6,7 @@
 
 
 using namespace std;
-#define M 10
+#define Max 10
 
 // 定义矩阵算法
 struct Matrix
@@ -53,6 +53,7 @@ struct Matrix
 	}
     // 将一维数组的值复制到矩阵中
 	Matrix assign(double *x) //复制运算符=重载，只能重载为成员函数
+
 	{  
 		for (int i = 0; i < row; i++)
 			for (int j = 0; j < col; j++)
@@ -60,7 +61,7 @@ struct Matrix
 		return *this;
 	}
     // 将二维数组的值复制到矩阵中
-    Matrix copy_Matrix(double x[M][M])
+    Matrix copy_Matrix(double x[Max][Max])
     {
         for(int i=0; i<row; i++)
         {

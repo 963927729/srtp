@@ -48,7 +48,7 @@ int main()
             out << " ";
         }
         out << endl;
-
+    
     }
     out.close();
 
